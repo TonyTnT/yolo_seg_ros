@@ -2,32 +2,36 @@
 
 ## Overview
 
-a pkg using npu on rk3588 for REALTIME yolo seg 
+a pkg using gpu for yolo seg
+
 ![](https://raw.githubusercontent.com/TonyTnT/picgo/main/202405241117027.gif)
+
+comparing to inference on rk3588 (infer time < 20ms), the infer time < 2ms
+
+
 ## Requirements
 
-- rknn model, for inference
-- rk3588
-- any rgbd cam
+- gpu, e.g. 4090
+- any rgbd cam topic
+
 
 ## Installation
 ### Preparation
-1. download onnx model 
-from rknn model zoo  https://github.com/rockchip-linux/rknn-toolkit2/tree/master/rknn_toolkit_lite2/packages
-or export from ultralytics  https://docs.ultralytics.com/modes/export/#usage-examples
 
+1. Install Ultralytics
+2. Prepare ROS IMAGE TOPICS
 
-2. transform to rknn format
-https://github.com/airockchip/rknn_model_zoo/blob/main/examples/yolov8_seg/README.md#4-convert-to-rknn
-
-3. install appropriate whl
-for rk3588 aarch64, choose `rknn_toolkit_lite2` https://github.com/rockchip-linux/rknn-toolkit2/tree/master/rknn_toolkit_lite2/packages
-![alt text](image.png)
 
 ### About pkg
 1. Clone this repository into your workspace.
 2. Build the package using `colcon build --packages-select yolov8_seg `.
 3. Source the setup file: `source install/setup.bash`.
+
+
+to keep the time-accurated position of the objects, using ros pkg `message_filters` to sync `color/image_raw` and `depth/image_raw`
+
+though using image from `web video server` (websocket) seems have lower latency 
+
 
 ## Usage
 
